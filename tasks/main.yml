@@ -1,0 +1,24 @@
+---
+- name: Install snapd
+  apt:
+    name: snapd
+    state: present
+    update_cache: true
+
+- name: Install certbot
+  community.general.snap:
+    name: certbot
+    classic: true
+
+- name: Set certbot privilege
+  ansible.builtin.command: snap set certbot trust-plugin-with-root=ok
+
+- name: Install certbot addons
+  community.general.snap:
+    name:
+      - certbot-dns-route53
+    classic: true
+
+- name: Issue certificate
+  ansible.builtin.command: certbot --non-interactive --redirect --agree-tos --nginx -d {{domain}} -m {{email}}
+  notify: restart nginx
