@@ -19,6 +19,14 @@
       - certbot-dns-route53
     classic: true
 
+- name: Daemon reload
+  command: systemctl daemon-reload
+
+- name: Restart NGINX
+  service:
+    name: nginx
+    state: restarted
+
 - name: Issue certificate
   ansible.builtin.command: certbot --non-interactive --redirect --agree-tos --nginx -d {{domain}} -m {{email}}
   notify: restart nginx
