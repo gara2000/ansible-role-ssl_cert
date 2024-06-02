@@ -18,7 +18,7 @@ Role Variables
 Dependencies
 ------------
 
-- gara2000.nginx role
+- gara2000.nginx role version v1.2.0
 
 Example Playbook
 ----------------
